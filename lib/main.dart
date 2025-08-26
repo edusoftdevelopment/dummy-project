@@ -1,4 +1,4 @@
-import 'package:dummy_project/feature/recipt_page/recept_page.dart';
+import 'package:dummy_project/feature/recept_page/recept_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,11 +12,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Dummy Project',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const ReceiptPage(),
+      home: const ReceptPage(),
     );
   }
 }

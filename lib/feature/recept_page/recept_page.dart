@@ -7,14 +7,14 @@ import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-class ReceiptPage extends StatefulWidget {
-  const ReceiptPage({super.key});
+class ReceptPage extends StatefulWidget {
+  const ReceptPage({super.key});
 
   @override
-  State<ReceiptPage> createState() => _ReceiptPageState();
+  State<ReceptPage> createState() => _ReceptPageState();
 }
 
-class _ReceiptPageState extends State<ReceiptPage> {
+class _ReceptPageState extends State<ReceptPage> {
   final GlobalKey _receiptKey = GlobalKey();
   bool _isSaving = false;
 
