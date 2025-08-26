@@ -11,9 +11,6 @@ import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-
-
-
 class ReceiptPage extends StatefulWidget {
   const ReceiptPage({super.key});
   @override
@@ -147,27 +144,6 @@ class _ReceiptPageState extends State<ReceiptPage> {
                         ),
                       ),
 
-                      const SizedBox(height: 18),
-
-                      // Logo (use your asset named assets/logo.png)
-                      // Container(
-                      //   width: 110,
-                      //   height: 110,
-                      //   decoration: BoxDecoration(
-                      //     color: const Color(0xFF6F476A),
-                      //     borderRadius: BorderRadius.circular(16),
-                      //   ),
-                      //   child: ClipRRect(
-                      //     borderRadius: BorderRadius.circular(16),
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.all(12.0),
-                      //       child: Image.asset(
-                      //         'assets/logo.png',
-                      //         fit: BoxFit.contain,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       const SizedBox(height: 18),
 
                       const Text(
