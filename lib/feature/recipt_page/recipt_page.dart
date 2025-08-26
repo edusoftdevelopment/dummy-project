@@ -1,18 +1,11 @@
-// receipt_screenshot.dart
-// Copy this single-file Flutter app into your project (lib/main.dart) to reproduce
-// the receipt container exactly and capture it as an image (save & share).
 
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-
-
-
 
 class ReceiptPage extends StatefulWidget {
   const ReceiptPage({super.key});
@@ -33,13 +26,13 @@ class _ReceiptPageState extends State<ReceiptPage> {
               as RenderRepaintBoundary?;
       if (boundary == null) throw 'Receipt not rendered yet';
 
-      final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-      final ByteData? byteData = await image.toByteData(
+      final image = await boundary.toImage(pixelRatio: 3);
+      final byteData = await image.toByteData(
         format: ui.ImageByteFormat.png,
       );
       if (byteData == null) throw 'Unable to convert image to bytes';
 
-      final Uint8List pngBytes = byteData.buffer.asUint8List();
+      final pngBytes = byteData.buffer.asUint8List();
 
       final tempDir = await getTemporaryDirectory();
       final file = await File(
@@ -61,7 +54,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
   @override
   Widget build(BuildContext context) {
     // Use fixed width so layout stays identical across devices
-    final receiptWidth = 360.0;
+    const receiptWidth = 360.0;
 
     return Scaffold(
       backgroundColor: Colors.white, // purple outer border color
@@ -85,23 +78,25 @@ class _ReceiptPageState extends State<ReceiptPage> {
                   width: receiptWidth,
                   // Outer white area with rounded corners
                   padding: const EdgeInsets.symmetric(
-                    vertical: 24.0,
-                    horizontal: 16.0,
+                    vertical: 24,
+                    horizontal: 16,
                   ),
                   decoration: BoxDecoration(
                     color: Colors.white,
 
-                    border: Border.all(color: Color(0xFF613D6B), width: 15),
+                    border: Border.all(
+                      color: const Color(0xFF613D6B),
+                      width: 15,
+                    ),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // Green check circle
                       Container(
                         width: 70,
                         height: 70,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.green,
                           shape: BoxShape.circle,
                         ),
@@ -192,9 +187,9 @@ class _ReceiptPageState extends State<ReceiptPage> {
                       const SizedBox(height: 14),
 
                       // Balances
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           _LabelValue(
                             label: 'Remaining Balance :',
                             value: '50000',
@@ -210,9 +205,9 @@ class _ReceiptPageState extends State<ReceiptPage> {
                       const SizedBox(height: 12),
 
                       // Dashed divider
-                      SizedBox(
+                      const SizedBox(
                         width: receiptWidth - 40,
-                        child: const Divider(
+                        child: Divider(
                           thickness: 1,
                           color: Colors.black26,
                         ),
@@ -297,9 +292,9 @@ class _ReceiptPageState extends State<ReceiptPage> {
 }
 
 class _LabelValue extends StatelessWidget {
+  const _LabelValue({required this.label, required this.value});
   final String label;
   final String value;
-  const _LabelValue({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
