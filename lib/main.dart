@@ -1,4 +1,4 @@
-import 'package:dummy_project/feature/recipt_page/recipt_page.dart';
+import 'package:dummy_project/feature/recipt_page/recept_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
