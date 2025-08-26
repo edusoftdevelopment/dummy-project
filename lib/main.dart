@@ -17,8 +17,6 @@ class MyApp extends StatelessWidget {
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
-
-  
 }
 
 class MyHomePage extends StatefulWidget {
@@ -59,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
