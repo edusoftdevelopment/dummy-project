@@ -1,4 +1,3 @@
-import 'package:dummy_project/feature/pdf_to_image_page/pdf_to_image_page.dart';
 import 'package:dummy_project/feature/recept_page/view/recept_page.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: ReceiptPage(),
+      home: const ReceiptPage(),
     );
   }
 }
