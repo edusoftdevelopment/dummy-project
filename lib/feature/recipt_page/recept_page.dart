@@ -1,6 +1,7 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -277,11 +278,13 @@ class _ReceiptPageState extends State<ReceiptPage> {
       }
 
       if (xfiles.isNotEmpty) {
-        await Share.shareXFiles(xfiles, text: 'Receipts');
+        await SharePlus.instance.share(
+          ShareParams(files: xfiles, text: 'Receipts'),
+        );
       } else {
         throw 'No receipt images were created.';
       }
-    } catch (e) {
+    } on Exception catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: AutoSizeText('Error: $e')),
@@ -359,7 +362,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
                                   list: tableDataList,
                                   itemCount: itemCount,
                                   totalPages: receiptCount,
-                                  curentPage: currentPage,
+                                  currentPage: currentPage,
                                 ),
 
                                 SizedBox(height: screenHeight * 0.002),
@@ -391,7 +394,7 @@ class ReceiptHeader extends StatelessWidget {
     required this.index,
     required this.itemCount,
     required this.totalPages,
-    required this.curentPage,
+    required this.currentPage,
     super.key,
   });
   final double screenWidth;
@@ -400,14 +403,14 @@ class ReceiptHeader extends StatelessWidget {
   final int index;
   final int itemCount;
   final int totalPages;
-  final int curentPage;
+  final int currentPage;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (curentPage == 1)
+        if (currentPage == 1)
           Column(
             children: [
               const Row(
@@ -451,14 +454,14 @@ class ReceiptHeader extends StatelessWidget {
           list: list,
         ),
         SizedBox(height: screenHeight * 0.001),
-        AutoSizeText('Page $curentPage/$totalPages'),
+        AutoSizeText('Page $currentPage/$totalPages'),
       ],
     );
   }
 }
 
 class ReceiptLedgerTable extends StatelessWidget {
-  const ReceiptLedgerTable({
+  ReceiptLedgerTable({
     required this.list,
     required this.indexFromOut,
     required this.itemCount,
@@ -467,6 +470,15 @@ class ReceiptLedgerTable extends StatelessWidget {
   final List<TableDataModel> list;
   final int indexFromOut;
   final int itemCount;
+  List<String> headerTitles = [
+    'Date',
+    'Source',
+    'Description',
+    'Debit',
+    'Credit',
+    'Balance',
+  ];
+
   @override
   Widget build(BuildContext context) {
     final start = indexFromOut;
@@ -476,7 +488,7 @@ class ReceiptLedgerTable extends StatelessWidget {
         outside: BorderSide(
           color: Colors.black26,
           width: 0,
-        ), // sirf bahar ka border
+        ),
       ),
 
       columnWidths: const {
@@ -488,54 +500,7 @@ class ReceiptLedgerTable extends StatelessWidget {
         5: FlexColumnWidth(2.5), // Balance
       },
       children: [
-        /// Header Row
-        const TableRow(
-          decoration: BoxDecoration(color: Color(0xFFE0E0E0)),
-          children: [
-            Padding(
-              padding: EdgeInsets.all(4),
-              child: Text(
-                'Date',
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(4),
-              child: Text(
-                'Source',
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(4),
-              child: Text(
-                'Description',
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(4),
-              child: Text(
-                'Debit',
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(4),
-              child: Text(
-                'Credit',
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(4),
-              child: Text(
-                'Balance',
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
+        buildHeaderRow(),
 
         /// Data Rows
         ...List.generate(
@@ -553,6 +518,28 @@ class ReceiptLedgerTable extends StatelessWidget {
           },
         ),
       ],
+    );
+  }
+
+  ///! Header Row Widget
+  TableRow buildHeaderRow() {
+    return TableRow(
+      decoration: const BoxDecoration(color: Color(0xFFE0E0E0)),
+      children: headerTitles.map((title) {
+        return Padding(
+          padding: const EdgeInsets.all(4),
+          child: AutoSizeText(
+            title,
+            maxLines: 1,
+            presetFontSizes: const [10, 9, 8, 7, 6],
+            style: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        );
+      }).toList(),
     );
   }
 
@@ -579,7 +566,7 @@ class ReceiptLedgerTable extends StatelessWidget {
   Widget _cell(String text) {
     return Padding(
       padding: const EdgeInsets.all(4),
-      child: Text(
+      child: AutoSizeText(
         text,
         style: const TextStyle(
           fontSize: 10,

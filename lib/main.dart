@@ -1,5 +1,4 @@
-import 'package:dummy_project/feature/recept_page/recept_page.dart';
-import 'package:dummy_project/feature/share_multiple_images/multiple_image.dart';
+import 'package:dummy_project/feature/recipt_page/recept_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const ReceiptLedgerPage(),
+      home: const ReceiptPage(),
     );
   }
 }
