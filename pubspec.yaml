@@ -2,7 +2,7 @@ name: dummy_project
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -36,7 +36,15 @@ dependencies:
   cupertino_icons: ^1.0.8
   auto_size_text: ^3.0.0
   flutter_svg: ^2.2.0
-
+  path_provider: ^2.1.5
+  share_plus: ^11.1.0
+  file_picker: ^10.3.2
+  image: ^4.5.4
+  printing: ^5.14.2
+  permission_handler: ^12.0.1
+  image_gallery_saver: ^2.0.3
+  syncfusion_flutter_pdf: ^30.2.7
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -55,7 +63,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
