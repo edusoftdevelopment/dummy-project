@@ -73,7 +73,7 @@ class ReceiptLedgerTable extends ConsumerWidget {
                   debitSum;
               ref.read(TransactionSumProviders.balanceSumProvider('$indexFromOut').notifier).state =
                   balanceSum;
-            });
+            }});
 
             return _buildRow(
               date: data.date,
