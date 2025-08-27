@@ -51,7 +51,7 @@ class ReceiptLedgerTable extends ConsumerWidget {
           (index) {
             final data = list[start + index];
             final balance =
-                list[start + index].credit + list[start + index].debit;
+                list[start + index].debit - list[start + index].credit;
             final isCredit =
                 list[start + index].credit > list[start + index].debit;
 
@@ -63,8 +63,7 @@ class ReceiptLedgerTable extends ConsumerWidget {
               for (var i = start; i < end; i++) {
                 creditSum += list[i].credit;
                 debitSum += list[i].debit;
-                balanceSum +=  list[i].credit + list[i].debit;
-
+                balanceSum += list[i].debit - list[i].credit;
               }
 
               // Ab sahi provider me sahi value assign karo
@@ -72,7 +71,7 @@ class ReceiptLedgerTable extends ConsumerWidget {
                   creditSum;
               ref.read(debitSumProvider('$indexFromOut').notifier).state =
                   debitSum;
-                   ref.read(balanceSumProvider('$indexFromOut').notifier).state =
+              ref.read(balanceSumProvider('$indexFromOut').notifier).state =
                   balanceSum;
             });
 
@@ -155,7 +154,7 @@ final StateProviderFamily<double, Object?> debitSumProvider =
     StateProvider.family(
       (ref, arg) => 0.0,
     );
-    final StateProviderFamily<double, Object?> balanceSumProvider =
+final StateProviderFamily<double, Object?> balanceSumProvider =
     StateProvider.family(
       (ref, arg) => 0.0,
     );
