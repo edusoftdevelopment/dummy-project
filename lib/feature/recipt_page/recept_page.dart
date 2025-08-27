@@ -257,15 +257,20 @@ class _ReceiptPageState extends State<ReceiptPage> {
                 as RenderRepaintBoundary?;
         if (boundary == null) {
           // if an item isn't rendered this will throw — handle gracefully
-          throw 'Receipt ${i + 1} is not rendered yet. Make sure receipts are visible on screen.';
+          throw Exception(
+            'Receipt ${i + 1} is not rendered yet. Make sure receipts are visible on screen.',
+          );
         }
 
         final image = await boundary.toImage(pixelRatio: 3);
         final byteData = await image.toByteData(
           format: ui.ImageByteFormat.png,
         );
-        if (byteData == null)
-          throw 'Unable to convert image to bytes for receipt ${i + 1}';
+        if (byteData == null) {
+          throw Exception(
+            'Unable to convert image to bytes for receipt ${i + 1}',
+          );
+        }
 
         final pngBytes = byteData.buffer.asUint8List();
 
@@ -282,7 +287,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
           ShareParams(files: xfiles, text: 'Receipts'),
         );
       } else {
-        throw 'No receipt images were created.';
+        throw Exception('No receipt images were created.');
       }
     } on Exception catch (e) {
       if (mounted) {
