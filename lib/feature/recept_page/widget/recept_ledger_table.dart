@@ -59,7 +59,7 @@ class ReceiptLedgerTable extends StatelessWidget {
               debit: data.debit.toStringAsFixed(0),
               credit: data.credit.toStringAsFixed(0),
               balance:
-                  '${balance.toStringAsFixed(0)} ${(isCredit) ? 'Cr.' : 'Dr.'}',
+                  '${balance.toStringAsFixed(0)} ${isCredit ? 'Cr.' : 'Dr.'}',
             );
           },
         ),
