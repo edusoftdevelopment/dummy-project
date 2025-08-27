@@ -15,7 +15,7 @@ class ReceptPage extends StatefulWidget {
   State<ReceptPage> createState() => _ReceptPageState();
 }
 
-class _ReceiptPageState extends State<ReceiptPage> {
+class _ReceptPageState extends State<ReceptPage> {
   // set how many receipts you want to render & capture
   final int receiptCount = 2;
 
@@ -34,9 +34,9 @@ class _ReceiptPageState extends State<ReceiptPage> {
       setState(() => _isSaving = true);
 
       final tempDir = await getTemporaryDirectory();
-      final List<XFile> xfiles = [];
+      final xfiles = <XFile>[];
 
-      for (int i = 0; i < receiptCount; i++) {
+      for (var i = 0; i < receiptCount; i++) {
         final boundary =
             _receiptKeys[i].currentContext?.findRenderObject()
                 as RenderRepaintBoundary?;
@@ -45,8 +45,8 @@ class _ReceiptPageState extends State<ReceiptPage> {
           throw 'Receipt ${i + 1} is not rendered yet. Make sure receipts are visible on screen.';
         }
 
-        final ui.Image image = await boundary.toImage(pixelRatio: 3);
-        final ByteData? byteData = await image.toByteData(
+        final image = await boundary.toImage(pixelRatio: 3);
+        final byteData = await image.toByteData(
           format: ui.ImageByteFormat.png,
         );
         if (byteData == null)
