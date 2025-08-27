@@ -75,27 +75,59 @@ class ReceiptHeader extends ConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            AutoSizeText(
-              'Total Debit: ${debitSum.toStringAsFixed(0)}',
-              style: const TextStyle(fontSize: 2),
+            Expanded(
+              child: AutoSizeText(
+                'Total Debit: ${debitSum.toStringAsFixed(0)}',
+                minFontSize: 8,
+                maxFontSize: 12,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.right,
+              ),
             ),
-            // const Spacer(),
-            AutoSizeText(
-              'Total Credit: ${creditSum.toStringAsFixed(0)}',
-              style: const TextStyle(fontSize: 2),
+            Expanded(
+              child: AutoSizeText(
+                'Total Credit: ${creditSum.toStringAsFixed(0)}',
+                minFontSize: 8,
+                maxFontSize: 12,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.right,
+              ),
             ),
-            // const Spacer(),
-            AutoSizeText(
-              'Total Balance: ${balanceSum.toStringAsFixed(0)}',
-              style: const TextStyle(fontSize: 2),
+            Expanded(
+              child: AutoSizeText(
+                'Total Balance: ${balanceSum.toStringAsFixed(0)}',
+                minFontSize: 8,
+                maxFontSize: 12,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.right,
+              ),
             ),
-            // const Spacer(),
           ],
         ),
         SizedBox(height: screenHeight * 0.001),
         AutoSizeText(
           'Page $currentPage/$totalPages',
-          style: const TextStyle(fontSize: 2),
+          minFontSize: 8,
+          maxFontSize: 12,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+          textAlign: TextAlign.center,
         ),
       ],
     );
