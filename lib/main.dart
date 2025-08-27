@@ -1,5 +1,5 @@
 import 'package:dummy_project/feature/pdf_to_image_page/pdf_to_image_page.dart';
-import 'package:dummy_project/feature/recipt_page/recept_page.dart';
+import 'package:dummy_project/feature/recept_page/view/recept_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
