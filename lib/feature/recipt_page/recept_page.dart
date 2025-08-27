@@ -106,7 +106,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
             ),
           ),
           backgroundColor: Colors.white,
-          
+
           appBar: AppBar(
             title: const AutoSizeText(
               'Receipt Preview',

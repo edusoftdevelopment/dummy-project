@@ -1,4 +1,5 @@
 part of 'widget.dart';
+
 // ignore: must_be_immutable
 class ReceiptLedgerTable extends StatelessWidget {
   ReceiptLedgerTable({
@@ -47,13 +48,18 @@ class ReceiptLedgerTable extends StatelessWidget {
           end - start,
           (index) {
             final data = list[start + index];
+            final balance =
+                list[start + index].credit + list[start + index].debit;
+            final isCredit =
+                list[start + index].credit > list[start + index].debit;
             return _buildRow(
               date: data.date,
               source: data.source,
               desc: data.description,
-              debit: data.debit,
-              credit: data.credit,
-              balance: data.balance,
+              debit: data.debit.toStringAsFixed(0),
+              credit: data.credit.toStringAsFixed(0),
+              balance:
+                  '${balance.toStringAsFixed(0)} ${(isCredit) ? 'Cr.' : 'Dr.'}',
             );
           },
         ),
@@ -61,7 +67,7 @@ class ReceiptLedgerTable extends StatelessWidget {
     );
   }
 
-  ///! Header Row Widget
+  //! Header Row Widget
   TableRow buildHeaderRow() {
     return TableRow(
       decoration: const BoxDecoration(color: Color(0xFFE0E0E0)),
