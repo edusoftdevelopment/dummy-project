@@ -461,7 +461,7 @@ class ReceiptHeader extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            AutoSizeText('Page $curentPage/$totalPages'),
+            AutoSizeText('Page $currentPage/$totalPages'),
           ],
         ),
       ],
