@@ -22,9 +22,9 @@ class ReceiptHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final creditSum = ref.watch(TransactionSumProviders.creditSumProvider('$index'));
-    final debitSum = ref.watch(TransactionSumProviders.debitSumProvider('$index'));
-    final balanceSum = ref.watch(TransactionSumProviders.balanceSumProvider('$index'));
+    final creditSum = ref.watch(creditSumProvider('$index'));
+    final debitSum = ref.watch(debitSumProvider('$index'));
+    final balanceSum = ref.watch(balanceSumProvider('$index'));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
