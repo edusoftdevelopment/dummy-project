@@ -1,7 +1,7 @@
 part of 'widget.dart';
 
 // --- rest of widgets stay the same (ReceiptHeader, ReceiptBalances, ReceiptFooter, LabelValue) ---
-class ReceiptHeader extends StatelessWidget {
+class ReceiptHeader extends ConsumerWidget {
   const ReceiptHeader({
     required this.screenWidth,
     required this.screenHeight,
@@ -21,7 +21,10 @@ class ReceiptHeader extends StatelessWidget {
   final int currentPage;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final creditSum = ref.watch(creditSumProvider("${index}"));
+    final debitSum = ref.watch(debitSumProvider("${index}"));
+    final balanceSum = ref.watch(balanceSumProvider("${index}"));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -72,8 +75,27 @@ class ReceiptHeader extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            AutoSizeText('Page $currentPage/$totalPages'),
+            AutoSizeText(
+              'Total Debit: ${debitSum.toStringAsFixed(0)}',
+              style: TextStyle(fontSize: 2),
+            ),
+            Spacer(),
+            AutoSizeText(
+              'Total Credit: ${creditSum.toStringAsFixed(0)}',
+              style: TextStyle(fontSize: 2),
+            ),
+            Spacer(),
+            AutoSizeText(
+              'Total Balance: ${balanceSum.toStringAsFixed(0)}',
+              style: TextStyle(fontSize: 2),
+            ),
+            Spacer(),
           ],
+        ),
+        SizedBox(height: screenHeight * 0.001),
+        AutoSizeText(
+          'Page $currentPage/$totalPages',
+          style: TextStyle(fontSize: 2),
         ),
       ],
     );
