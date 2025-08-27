@@ -321,7 +321,6 @@ class _ReceiptPageState extends State<ReceiptPage> {
                 children: [
                   SizedBox(height: screenHeight * 0.02),
 
-                  //! Instead of ListView.builder we render all receipts using Column
                   Column(
                     children: List.generate(receiptCount, (index) {
                       final startIndex = index * 10;
@@ -451,7 +450,12 @@ class ReceiptHeader extends StatelessWidget {
           list: list,
         ),
         SizedBox(height: screenHeight * 0.001),
-        AutoSizeText('Page $curentPage/$totalPages'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            AutoSizeText('Page $curentPage/$totalPages'),
+          ],
+        ),
       ],
     );
   }
@@ -473,6 +477,7 @@ class ReceiptLedgerTable extends StatelessWidget {
     final int end = min(start + itemCount, list.length);
     return Table(
       border: TableBorder.symmetric(
+        borderRadius: BorderRadius.circular(20),
         inside: BorderSide.none, // beech wali lines hata dega
         outside: BorderSide(
           color: Colors.black26,
