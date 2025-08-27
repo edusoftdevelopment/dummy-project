@@ -22,9 +22,9 @@ class ReceiptHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final creditSum = ref.watch(creditSumProvider("${index}"));
-    final debitSum = ref.watch(debitSumProvider("${index}"));
-    final balanceSum = ref.watch(balanceSumProvider("${index}"));
+    final creditSum = ref.watch(TransactionSumProviders.creditSumProvider('$index'));
+    final debitSum = ref.watch(TransactionSumProviders.debitSumProvider('$index'));
+    final balanceSum = ref.watch(TransactionSumProviders.balanceSumProvider('$index'));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -77,25 +77,25 @@ class ReceiptHeader extends ConsumerWidget {
           children: [
             AutoSizeText(
               'Total Debit: ${debitSum.toStringAsFixed(0)}',
-              style: TextStyle(fontSize: 2),
+              style: const TextStyle(fontSize: 2),
             ),
-            Spacer(),
+            const Spacer(),
             AutoSizeText(
               'Total Credit: ${creditSum.toStringAsFixed(0)}',
-              style: TextStyle(fontSize: 2),
+              style: const TextStyle(fontSize: 2),
             ),
-            Spacer(),
+            const Spacer(),
             AutoSizeText(
               'Total Balance: ${balanceSum.toStringAsFixed(0)}',
-              style: TextStyle(fontSize: 2),
+              style: const TextStyle(fontSize: 2),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
         SizedBox(height: screenHeight * 0.001),
         AutoSizeText(
           'Page $currentPage/$totalPages',
-          style: TextStyle(fontSize: 2),
+          style: const TextStyle(fontSize: 2),
         ),
       ],
     );
