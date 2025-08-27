@@ -61,19 +61,20 @@ class ReceiptLedgerTable extends ConsumerWidget {
               double balanceSum = 0;
 
               for (var i = start; i < end; i++) {
-              for (var i = start; i < end; i++) {
-                creditSum += list[i].credit;
-                debitSum += list[i].debit;
-                balanceSum += list[i].credit + list[i].debit;
-              }
+                for (var i = start; i < end; i++) {
+                  creditSum += list[i].credit;
+                  debitSum += list[i].debit;
+                  balanceSum += list[i].credit + list[i].debit;
+                }
 
-              ref.read(TransactionSumProviders.creditSumProvider('$indexFromOut').notifier).state =
-                  creditSum;
-              ref.read(TransactionSumProviders.debitSumProvider('$indexFromOut').notifier).state =
-                  debitSum;
-              ref.read(TransactionSumProviders.balanceSumProvider('$indexFromOut').notifier).state =
-                  balanceSum;
-            }});
+                ref.read(creditSumProvider('$indexFromOut').notifier).state =
+                    creditSum;
+                ref.read(debitSumProvider('$indexFromOut').notifier).state =
+                    debitSum;
+                ref.read(balanceSumProvider('$indexFromOut').notifier).state =
+                    balanceSum;
+              }
+            });
 
             return _buildRow(
               date: data.date,
