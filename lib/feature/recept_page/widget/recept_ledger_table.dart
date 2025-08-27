@@ -51,7 +51,7 @@ class ReceiptLedgerTable extends ConsumerWidget {
           (index) {
             final data = list[start + index];
             final balance =
-                list[start + index].credit + list[start + index].debit;
+                list[start + index].debit - list[start + index].credit;
             final isCredit =
                 list[start + index].credit > list[start + index].debit;
 
@@ -60,6 +60,7 @@ class ReceiptLedgerTable extends ConsumerWidget {
               double debitSum = 0;
               double balanceSum = 0;
 
+              for (var i = start; i < end; i++) {
               for (var i = start; i < end; i++) {
                 creditSum += list[i].credit;
                 debitSum += list[i].debit;
