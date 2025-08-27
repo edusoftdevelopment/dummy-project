@@ -1,4 +1,4 @@
-import 'package:dummy_project/feature/recipt_page/recept_page.dart';
+import 'package:dummy_project/feature/recept_page/view/recept_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

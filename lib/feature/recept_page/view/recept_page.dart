@@ -5,8 +5,8 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:dummy_project/feature/recipt_page/model/table_data_model.dart';
-import 'package:dummy_project/feature/recipt_page/widget/widget.dart';
+import 'package:dummy_project/feature/recept_page/model/table_data_model.dart';
+import 'package:dummy_project/feature/recept_page/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
