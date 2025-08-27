@@ -1,0 +1,161 @@
+part of 'widget.dart';
+
+// ignore: must_be_immutable
+class ReceiptLedgerTable extends ConsumerWidget {
+  ReceiptLedgerTable({
+    required this.list,
+    required this.indexFromOut,
+    required this.itemCount,
+    super.key,
+  });
+
+  final List<TableDataModel> list;
+  final int indexFromOut;
+  final int itemCount;
+  List<String> headerTitles = [
+    'Date',
+    'Source',
+    'Description',
+    'Debit',
+    'Credit',
+    'Balance',
+  ];
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final start = indexFromOut;
+    final int end = min(start + itemCount, list.length);
+    return Table(
+      border: const TableBorder.symmetric(
+        outside: BorderSide(
+          color: Colors.black26,
+          width: 0,
+        ),
+      ),
+
+      columnWidths: const {
+        0: FlexColumnWidth(3.5), // Date
+        1: FlexColumnWidth(4), // Source (zyada jagah chahiye)
+        2: FlexColumnWidth(3.1), // Description (chhota text hai)
+        3: FlexColumnWidth(2), // Debit
+        4: FlexColumnWidth(2), // Credit
+        5: FlexColumnWidth(2.5), // Balance
+      },
+      children: [
+        buildHeaderRow(),
+
+        /// Data Rows
+        ...List.generate(
+          end - start,
+
+          (index) {
+            final data = list[start + index];
+            final balance =
+                list[start + index].credit + list[start + index].debit;
+            final isCredit =
+                list[start + index].credit > list[start + index].debit;
+
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              double creditSum = 0;
+              double debitSum = 0;
+              double balanceSum = 0;
+
+              for (int i = start; i < end; i++) {
+                creditSum += list[i].credit;
+                debitSum += list[i].debit;
+                balanceSum +=  list[i].credit + list[i].debit;
+
+              }
+
+              // Ab sahi provider me sahi value assign karo
+              ref.read(creditSumProvider("${indexFromOut}").notifier).state =
+                  creditSum;
+              ref.read(debitSumProvider("${indexFromOut}").notifier).state =
+                  debitSum;
+                   ref.read(balanceSumProvider("${indexFromOut}").notifier).state =
+                  balanceSum;
+            });
+
+            return _buildRow(
+              date: data.date,
+              source: data.source,
+              desc: data.description,
+              debit: data.debit.toStringAsFixed(0),
+              credit: data.credit.toStringAsFixed(0),
+              balance:
+                  '${balance.toStringAsFixed(0)} ${(isCredit) ? 'Cr.' : 'Dr.'}',
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  //! Header Row Widget
+  TableRow buildHeaderRow() {
+    return TableRow(
+      decoration: const BoxDecoration(color: Color(0xFFE0E0E0)),
+      children: headerTitles.map((title) {
+        return Padding(
+          padding: const EdgeInsets.all(4),
+          child: AutoSizeText(
+            title,
+            maxLines: 1,
+            presetFontSizes: const [10, 9, 8, 7, 6],
+            style: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  TableRow _buildRow({
+    required String date,
+    required String source,
+    required String desc,
+    required String debit,
+    required String credit,
+    required String balance,
+  }) {
+    return TableRow(
+      children: [
+        _cell(date),
+        _cell(source),
+        _cell(desc),
+        _cell(debit),
+        _cell(credit),
+        _cell(balance),
+      ],
+    );
+  }
+
+  Widget _cell(String text) {
+    return Padding(
+      padding: const EdgeInsets.all(4),
+      child: AutoSizeText(
+        text,
+        style: const TextStyle(
+          fontSize: 10,
+        ),
+      ),
+    );
+  }
+}
+
+final StateProviderFamily<double, Object?> creditSumProvider =
+    StateProvider.family(
+      (ref, arg) => 0.0,
+    );
+
+final StateProviderFamily<double, Object?> debitSumProvider =
+    StateProvider.family(
+      (ref, arg) => 0.0,
+    );
+    final StateProviderFamily<double, Object?> balanceSumProvider =
+    StateProvider.family(
+      (ref, arg) => 0.0,
+    );
