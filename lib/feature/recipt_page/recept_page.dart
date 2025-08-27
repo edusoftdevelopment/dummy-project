@@ -329,7 +329,6 @@ class _ReceiptPageState extends State<ReceiptPage> {
                 children: [
                   SizedBox(height: screenHeight * 0.02),
 
-                  //! Instead of ListView.builder we render all receipts using Column
                   Column(
                     children: List.generate(receiptCount, (index) {
                       final startIndex = index * 10;
@@ -459,7 +458,12 @@ class ReceiptHeader extends StatelessWidget {
           list: list,
         ),
         SizedBox(height: screenHeight * 0.001),
-        AutoSizeText('Page $currentPage/$totalPages'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            AutoSizeText('Page $curentPage/$totalPages'),
+          ],
+        ),
       ],
     );
   }
