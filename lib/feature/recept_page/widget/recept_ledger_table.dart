@@ -1,13 +1,14 @@
 part of 'widget.dart';
 
 // ignore: must_be_immutable
-class ReceiptLedgerTable extends StatelessWidget {
+class ReceiptLedgerTable extends ConsumerWidget {
   ReceiptLedgerTable({
     required this.list,
     required this.indexFromOut,
     required this.itemCount,
     super.key,
   });
+
   final List<TableDataModel> list;
   final int indexFromOut;
   final int itemCount;
@@ -21,7 +22,7 @@ class ReceiptLedgerTable extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final start = indexFromOut;
     final int end = min(start + itemCount, list.length);
     return Table(
@@ -46,12 +47,35 @@ class ReceiptLedgerTable extends StatelessWidget {
         /// Data Rows
         ...List.generate(
           end - start,
+
           (index) {
             final data = list[start + index];
             final balance =
                 list[start + index].credit + list[start + index].debit;
             final isCredit =
                 list[start + index].credit > list[start + index].debit;
+
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              double creditSum = 0;
+              double debitSum = 0;
+              double balanceSum = 0;
+
+              for (int i = start; i < end; i++) {
+                creditSum += list[i].credit;
+                debitSum += list[i].debit;
+                balanceSum +=  list[i].credit + list[i].debit;
+
+              }
+
+              // Ab sahi provider me sahi value assign karo
+              ref.read(creditSumProvider("${indexFromOut}").notifier).state =
+                  creditSum;
+              ref.read(debitSumProvider("${indexFromOut}").notifier).state =
+                  debitSum;
+                   ref.read(balanceSumProvider("${indexFromOut}").notifier).state =
+                  balanceSum;
+            });
+
             return _buildRow(
               date: data.date,
               source: data.source,
@@ -121,3 +145,17 @@ class ReceiptLedgerTable extends StatelessWidget {
     );
   }
 }
+
+final StateProviderFamily<double, Object?> creditSumProvider =
+    StateProvider.family(
+      (ref, arg) => 0.0,
+    );
+
+final StateProviderFamily<double, Object?> debitSumProvider =
+    StateProvider.family(
+      (ref, arg) => 0.0,
+    );
+    final StateProviderFamily<double, Object?> balanceSumProvider =
+    StateProvider.family(
+      (ref, arg) => 0.0,
+    );
